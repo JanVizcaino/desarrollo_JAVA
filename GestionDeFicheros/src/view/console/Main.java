@@ -9,7 +9,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Seleccione una opción:");
+            System.out.println("Seleccione una opcion:");
             System.out.println("1. Crear carpeta");
             System.out.println("2. Crear archivo");
             System.out.println("3. Ver lista de archivos");
@@ -84,7 +84,6 @@ public class Main {
                     System.out.print("Ingrese el nombre del archivo: ");
                     String deleteFile = scanner.nextLine();
                     Funciones.deleteFile(deletePath, deleteFile);
-                    System.out.println("Archivo eliminado.");
                     break;
                 case 7:
                     System.out.print("Ingrese la ruta del archivo: ");
