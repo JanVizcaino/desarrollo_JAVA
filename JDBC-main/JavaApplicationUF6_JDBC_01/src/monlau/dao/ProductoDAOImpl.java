@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import monlau.model.Producto;
 import java.sql.*;
 
+
 /**
  *
  * @author user
@@ -16,7 +17,7 @@ import java.sql.*;
 public class ProductoDAOImpl implements ProductoDAO {
 
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/inventario?useSSL=false";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/prueba?useSSL=false";
     static final String DB_USR = "root";
     static final String DB_PWD = "";
 
@@ -59,11 +60,48 @@ public class ProductoDAOImpl implements ProductoDAO {
     }
 
     public void update(Producto producto) {
-
+        Connection conn = null;
+        try {
+            registerDriver();
+            conn = DriverManager.getConnection(DB_URL, DB_USR, DB_PWD);
+            Statement stmt = conn.createStatement();
+            String query = "UPDATE producto SET "
+                    + "nombre = '" + producto.getNombre() + "', "
+                    + "precio = " + producto.getPrecio()
+                    + " WHERE id = " + producto.getId() + ";";
+            stmt.executeUpdate(query);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
     }
 
     public void delete(Producto producto) {
-
+        Connection conn = null;
+        try{
+            registerDriver();
+            conn = DriverManager.getConnection(DB_URL, DB_USR, DB_PWD);
+            Statement stmt = conn.createStatement();
+            String query = "delete from producto where id = " + producto.getId() + ";";
+            stmt.executeUpdate(query);
+        }catch (SQLException ex){
+            throw new RuntimeException(ex);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
     }
 
     public Producto read(Integer id) {
